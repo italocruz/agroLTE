@@ -1,6 +1,5 @@
 <?php
-ob_start();
-session_start();
+include '../../sessao.php';
 ?>
 <!DOCTYPE html>
 <html>

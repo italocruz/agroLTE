@@ -1,6 +1,5 @@
 <?php
-ob_start();
-session_start();
+include '../../sessao.php';
 
 $status = "0"; //boleto em aberto
 ?>

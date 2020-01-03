@@ -354,7 +354,6 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             $q = $pdo->prepare($sql);
                             $q->execute(array($status, $hoje));
                             $result = $q->fetchAll();
-                            
                             if (count($result)) {
                                 foreach ($result as $row) {
                                     $total = $total + 1;

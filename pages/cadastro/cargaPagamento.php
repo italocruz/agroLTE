@@ -1,6 +1,5 @@
 <?php
-ob_start();
-session_start();
+include '../../sessao.php';
 
 include '../../banco.php';
 

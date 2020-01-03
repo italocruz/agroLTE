@@ -60,16 +60,7 @@ include '../../sessao.php';
                                             <input type="text" class="form-control" placeholder="Nome" name="produto" required="" value="<?php echo!empty($produto) ? $produto : ''; ?>">
                                         </div>
                                     </div>
-                                    <!--
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Descrição</label>
-                                            <input type="text" class="form-control" placeholder="Descrição" name="descricao" required="" value="< ?php echo!empty($descricao) ? $descricao : ''; ?>">
-                                        </div>
-                                    </div>
-                                    -->
                                 </div>
-
 
                                 <div class="row">
                                     <div class="col-4">
@@ -78,7 +69,7 @@ include '../../sessao.php';
                                     </div>
                                     <div class="col-4">
                                         <label>Valor da Venda</label>
-                                        <input type="text" class="form-control" placeholder="Valor Venda" name="valorVenda" onkeypress="return onlynumber();" required="" value="<?php echo!empty($valorVenda) ? $valorVendaa : ''; ?>">
+                                        <input type="text" class="form-control" placeholder="Valor Venda" name="valorVenda" onkeyup="moeda(this);" required="" value="<?php echo!empty($valorVenda) ? $valorVenda : ''; ?>">
                                     </div>
                                     <div class="col-4">
                                         <label>Data</label>  
@@ -124,12 +115,16 @@ include '../../sessao.php';
                 if (!empty($_POST)) {
 
                     $produto = $_POST['produto'];
-                    $valorVenda = $_POST['valorVenda'];
+                    
+                    if (strlen($_POST['valorVenda']) < 7) {
+                        $valorVenda = str_replace(",", ".", $_POST['valorVenda']);
+                    } else {
+                        $valorVenda = str_replace(",", ".", str_replace(".", "", $_POST['valorVenda']));
+                    }
+                    
                     $quantidade = $_POST['quantidade'];
                     $data = $_POST['data'];
-                    //$data = date('Y-m-d', strtotime($_POST["data"]));
                     $tipo = $_POST['tipo'];
-
 
                     //Inserindo no Banco:
                     $pdo = Banco::conectar();
@@ -193,7 +188,7 @@ include '../../sessao.php';
                                         echo '<tr>';
                                         echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
                                         echo '<td>' . $row['produto'] . '</td>';
-                                        echo '<td>' . $row['valorVenda'] . '</td>';
+                                        echo '<td> R$ ' . number_format($row['valorVenda'], 2, ',', '.') . '</td>';
                                         echo '<td>' . $row['quantidade'] . '</td>';
                                         echo '<td>' . date("d/m/Y", strtotime($row['data'])) . '</td>';
                                         echo '<td>' . $row['tipo'] . '</td>';
@@ -230,9 +225,6 @@ include '../../sessao.php';
                 ?>
                 <!-- FIM VENDAS -->
 
-
-
-
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
@@ -267,49 +259,7 @@ include '../../sessao.php';
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-             
-             $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-delete').modal({show: true});
-                    return false;
-                });
-            });
-        </script>
-
+        <?php include '../util/js.html'; ?>
 
 
     </body>

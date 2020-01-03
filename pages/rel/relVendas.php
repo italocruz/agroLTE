@@ -42,7 +42,6 @@ include '../../sessao.php';
                     </div><!-- /.container-fluid -->
                 </section>
 
-
                 <section class="content">
                     <div class="card card-primary">
                         <div class="card-header">
@@ -60,68 +59,14 @@ include '../../sessao.php';
                                             <input type="date" class="form-control" name="data" required="" value="<?php echo!empty($data) ? $data : date("Y-m-d"); ?>"> 
                                         </div>
                                     </div>
-                                    <!--
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Produto</label>
-                                            <input type="text" class="form-control" placeholder="Nome" name="produto" required="" value="< ?php echo!empty($produto) ? $produto : ''; ?>">
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>Descrição</label>
-                                            <input type="text" class="form-control" placeholder="Descrição" name="descricao" required="" value="< ?php echo!empty($descricao) ? $descricao : ''; ?>">
-                                        </div>
-                                    </div>
-                                    -->
                                 </div>
-
-                                <!--
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label>Valor da Venda</label>
-                                        <input type="text" class="form-control" placeholder="Valor Venda" name="valorVenda" required="" value="< ?php echo!empty($valorVenda) ? $valorVendaa : ''; ?>">
-                                    </div>
-                                    <div class="col-4">
-                                        <label>Quantidade</label>
-                                        <input type="text" class="form-control" placeholder="Quantidade" name="quantidade" required="" value="< ?php echo!empty($quantidade) ? $quantidade : ''; ?>">
-                                    </div>
-                                    <div class="col-4">
-                                        <label>Data</label>  
-                                        <input type="date" class="form-control" name="data" required="" value="< ?php echo!empty($data) ? $data : date("Y-m-d"); ?>"> 
-                                    </div>
-                                </div>
-          
-                                <br>
-                                <div class="row">    
-                                    <div class="col-3">
-                                        <label>Tipo Produto</label> 
-                                        <div class="form-group clearfix">
-                                            <div class="form-check d-inline">
-                                                <input type="radio" name="tipo" value="Ração">
-                                                <label class="form-check-label">Ração</label>
-                                            </div>
-                                            <div class="form-check d-inline">
-                                                <input type="radio" name="tipo" value="Milho">
-                                                <label class="form-check-label">Milho</label>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div>
-                                -->
                                 <!-- /.card-body -->
-                                <?php 
-                                
-                                
-                                ?>
 
                                 <div class="modal-footer justify-content-between">
                                     <button type="submit" class="btn btn-success swalDefaultSuccess">Gerar</button>
                                     <a href="relVendas.php" class="btn btn-warning" >Limpar</a>
                                 </div>
                             </div>
-
 
                         </form>
                     </div>
@@ -152,7 +97,7 @@ include '../../sessao.php';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example2" class="table table-bordered table-striped">
+                                    <table id="relatorio" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="display:none">#</th>
@@ -167,16 +112,16 @@ include '../../sessao.php';
                                             <?php
                                             foreach ($result as $row) {
                                                 if ($row['tipo'] == 'Milho') {
-                                                    $totalMilho = $totalMilho + str_replace(".", "", $row['valorVenda']);
+                                                    $totalMilho = $totalMilho + $row['valorVenda'];
                                                 }
                                                 if ($row['tipo'] == 'Ração') {
-                                                    $totalRacao = $totalRacao + str_replace(".", "", $row['valorVenda']);
+                                                    $totalRacao = $totalRacao + $row['valorVenda'];
                                                 }
 
                                                 echo '<tr>';
                                                 echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
                                                 echo '<td>' . $row['produto'] . '</td>';
-                                                echo '<td>' . $row['valorVenda'] . '</td>';
+                                                echo '<td> R$ ' . number_format($row['valorVenda'], 2, ',', '.') . '</td>';
                                                 echo '<td>' . $row['quantidade'] . '</td>';
                                                 echo '<td>' . $row['tipo'] . '</td>';
                                             }
@@ -206,8 +151,6 @@ include '../../sessao.php';
                             <!-- /.card -->
                         </section>
 
-
-
                         <?php
                     } else {
                         echo '<div class="card-header">';
@@ -217,7 +160,6 @@ include '../../sessao.php';
                     Banco::desconectar();
                 }
                 ?> 
-
 
                 <!-- Main content -->
 
@@ -249,20 +191,9 @@ include '../../sessao.php';
         <!-- DataTables -->
         <script src="../../plugins/datatables/jquery.dataTables.js"></script>
         <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+        
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": false,
-                    "lengthChange": true,
-                    "searching": false,
-                    "ordering": true,
-                    "info": false,
-                    "autoWidth": false,
-                });
-            });
-        </script>
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>

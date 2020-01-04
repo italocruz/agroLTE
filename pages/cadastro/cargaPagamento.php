@@ -58,6 +58,8 @@ Banco::desconectar();
 
         <!-- DataTables -->
         <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">  
+        
+        <link rel="shortcut icon" href="../../dist/img/favicon.ico" type="image/x-icon" />
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">

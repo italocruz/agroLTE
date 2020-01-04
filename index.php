@@ -44,7 +44,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         
-        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="dist/img/favicon.ico" type="image/x-icon" />
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">

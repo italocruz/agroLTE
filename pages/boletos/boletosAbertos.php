@@ -79,15 +79,18 @@ include '../../sessao.php';
                                     
                                     $hoje = date("Y-m-d");
                                     $btnSuccess = 'class="btn btn-success"';
+                                    $btnWarning = 'class="btn btn-warning"';
                                     $btnDanger = 'class="btn btn-danger"';
                                     
                                     foreach ($result as $row) {
 
                                         if ($row['dataVcto'] < $hoje) { 
                                             $class = $btnDanger;
+                                        } else if ($row['dataVcto'] == $hoje) { 
+                                            $class = $btnWarning;
                                         } else {
-                                            $class = $btnSuccess;
-                                        }                                        
+                                             $class = $btnSuccess;
+                                        }                                      
                                         
                                         echo '<tr>';
                                         echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';

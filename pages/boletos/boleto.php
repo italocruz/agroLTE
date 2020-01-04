@@ -68,7 +68,7 @@ $status = "0"; //boleto em aberto
                                     </div>
                                     <div class="col-3">
                                         <label>Valor</label>
-                                        <input type="text" class="form-control" placeholder="Valor" name="valor" onkeypress="return onlynumber();" required="" value="<?php echo!empty($valor) ? $valor : ''; ?>">
+                                        <input type="text" class="form-control" placeholder="Valor" name="valor" onkeyup="moeda(this);" required="" value="<?php echo!empty($valor) ? $valor : ''; ?>">
                                     </div>
                                 </div>
 
@@ -92,7 +92,6 @@ $status = "0"; //boleto em aberto
                                 </div>
                             </div>
 
-
                         </form>
                     </div>
                     <!-- /.card -->
@@ -101,11 +100,14 @@ $status = "0"; //boleto em aberto
                 <?php
                 include '../../banco.php';
 
-
                 if (!empty($_POST)) {
 
                     $dataVcto = $_POST['dataVcto'];
-                    $valor = $_POST['valor'];
+                    if (strlen($_POST['valor']) < 7) {
+                        $valor = str_replace(",", ".", $_POST['valor']);
+                    } else {
+                        $valor = str_replace(",", ".", str_replace(".", "", $_POST['valor']));
+                    }
                     $credor = $_POST['credor'];
                     $obs = $_POST['obs'];
                     //$status = DECLARADO NO TOPO DA PÁGINA
@@ -168,12 +170,12 @@ $status = "0"; //boleto em aberto
                                     <?php
                                     foreach ($result as $row) {
                                         
-                                        $total = $total + str_replace(".", "", $row['valor']);
+                                        $total = $total + $row['valor'];
                                         
                                         echo '<tr>';
                                         echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
                                         echo '<td>' . date("d/m/Y", strtotime($row['dataVcto'])) . '</td>';
-                                        echo '<td>' . $row['valor'] . '</td>';
+                                        echo '<td> R$ ' . number_format($row['valor'], 2, ',', '.') . '</td>';
                                         echo '<td>' . $row['credor'] . '</td>';
                                         echo '<td>' . $row['obs'] . '</td>';
 
@@ -250,49 +252,7 @@ $status = "0"; //boleto em aberto
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-             
-             $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-delete').modal({show: true});
-                    return false;
-                });
-            });
-        </script>
-
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>  

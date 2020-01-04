@@ -15,7 +15,11 @@ if (null == $id) {
 if (!empty($_POST)) {
     
     $dataVcto = $_POST['dataVcto'];
-    $valor = $_POST['valor'];
+    if (strlen($_POST['valor']) < 7) {
+        $valor = str_replace(",", ".", $_POST['valor']);
+    } else {
+        $valor = str_replace(",", ".", str_replace(".", "", $_POST['valor']));
+    }
     $credor = $_POST['credor'];
     $obs = $_POST['obs'];
 
@@ -36,14 +40,13 @@ if (!empty($_POST)) {
     $q->execute(array($id));
     $stmt = $q->fetch(PDO::FETCH_ASSOC);
     $dataVcto = $stmt['dataVcto'];
-    $valor = $stmt['valor'];
+    $valor = number_format($stmt['valor'], 2, ',', '.');
     $credor = $stmt['credor'];
     $obs = $stmt['obs'];
 
     Banco::desconectar();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -68,7 +71,6 @@ if (!empty($_POST)) {
     </head>
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
-
 
             <!-- MENU -->
             <?php include '../../menu.php'; ?>
@@ -107,7 +109,7 @@ if (!empty($_POST)) {
                                     </div>
                                     <div class="col-3">
                                         <label>Valor</label>
-                                        <input type="text" class="form-control" placeholder="Valor" name="valor" onkeypress="return onlynumber();" required="" value="<?php echo!empty($valor) ? $valor : ''; ?>">
+                                        <input type="text" class="form-control" placeholder="Valor" name="valor" onkeyup="moeda(this);" required="" value="<?php echo!empty($valor) ? $valor : ''; ?>">
                                     </div>
                                 </div>
 
@@ -130,7 +132,6 @@ if (!empty($_POST)) {
                                     <a href="boleto.php" class="btn btn-warning" >Cancelar</a>
                                 </div>
                             </div>
-
 
                         </form>
                     </div>
@@ -173,38 +174,7 @@ if (!empty($_POST)) {
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-        </script>
-
-
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>  

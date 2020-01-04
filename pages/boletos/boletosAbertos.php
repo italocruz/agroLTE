@@ -50,7 +50,7 @@ include '../../sessao.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-striped">
+                            <table id="boleto" class="table table-bordered table-striped">
                                 <thead>
                                     <tr >
                                         <th style="display:none">#</th>
@@ -90,12 +90,12 @@ include '../../sessao.php';
                                         echo '<tr>';
                                         echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
                                         echo '<td>' . date("d/m/Y", strtotime($row['dataVcto'])) . '</td>';
-                                        echo '<td>R$ ' . $row['valor'] . '</td>';
+                                        echo '<td> R$ ' . number_format($row['valor'], 2, ',', '.') . '</td>';
                                         echo '<td>' . $row['credor'] . '</td>';
                                         echo '<td>' . $row['obs'] . '</td>';
                                         echo '<td width=55>';
                                         echo ' ';
-                                        echo '<a ' . $class . '" href="boletoPgto.php?id=' . $row['id'] . '" data-confirm="Confirmar?"><i class=" fas fa-dollar-sign mr-2"></i></a>';
+                                        echo '<a ' . $class . '" href="boletoPgto.php?id=' . $row['id'] . '" data-pgto="Confirmar?"><i class=" fas fa-dollar-sign mr-2"></i></a>';
                                         
                                         echo '</td>';
                                         echo '</tr>';
@@ -144,33 +144,9 @@ include '../../sessao.php';
         <!-- DataTables -->
         <script src="../../plugins/datatables/jquery.dataTables.js"></script>
         <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+        
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-
-            $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-pgto').length) {
-                        $('body').append('<div class="modal fade" id="confirm-pgto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-success"><div class="modal-header text-white"><h4 class="modal-title">Confirmar Pagamento?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-pgto').modal({show: true});
-                    return false;
-                });
-            });
-
-        </script>
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>

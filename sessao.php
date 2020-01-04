@@ -9,3 +9,4 @@
 date_default_timezone_set('America/Sao_Paulo');
 ob_start();
 session_start();
+error_reporting(E_WARNING);

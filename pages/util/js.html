@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<script>
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+        });
+        $('#relatorio').DataTable({
+            "paging": false,
+            "lengthChange": true,
+            "searching": false,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false,
+        });
+        $('#despesa').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+        $('#boleto').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+    $('.swalDefaultSuccess').click(function () {
+        Toast.fire({
+            type: 'success',
+            title: 'Venda realizada com sucesso!'
+        })
+    });
+
+    function onlynumber(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /^[0-9.,]+$/;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault)
+                theEvent.preventDefault();
+        }
+    }
+
+    function moeda(valor) {
+        var v = valor.value.replace(/\D/g, '');
+        v = (v / 100).toFixed(2) + '';
+        v = v.replace(".", ",");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        valor.value = v;
+    }
+
+    $(document).ready(function () {
+        $('a[data-confirm]').click(function (ev) {
+            var href = $(this).attr('href');
+            if (!$('#confirm-delete').length) {
+                $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
+            }
+            $('#dataComfirmOK').attr('href', href);
+            $('#confirm-delete').modal({show: true});
+            return false;
+        });
+    });
+    
+    $(document).ready(function () {
+        $('a[data-pgto]').click(function (ev) {
+            var href = $(this).attr('href');
+            if (!$('#confirm-pgto').length) {
+                $('body').append('<div class="modal fade" id="confirm-pgto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-success"><div class="modal-header text-white"><h4 class="modal-title">Confirmar Pagamento?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
+            }
+            $('#dataComfirmOK').attr('href', href);
+            $('#confirm-pgto').modal({show: true});
+            return false;
+        });
+    });
+</script>

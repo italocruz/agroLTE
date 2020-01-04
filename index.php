@@ -43,6 +43,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -94,7 +96,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                     <!-- Sidebar user panel (optional) -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="dist/img/central/central.jpg" width=”160” height=”160” class="img-circle elevation-2" >
+                            <img src="dist/img/central.jpg" width=”160” height=”160” class="img-circle elevation-2" >
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">Central Agro</a>
@@ -390,7 +392,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                         <div class="row justify-content-md-center">
                             <div class="col-auto">
                                 <div class="col-10">
-                                    <img src="dist/img/central/central.jpg" class="product-image im" alt="Product Image">
+                                    <img src="dist/img/central.jpg" class="product-image im" alt="Product Image">
                                 </div>
                             </div>
                         </div>

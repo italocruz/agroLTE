@@ -33,7 +33,7 @@ USE `agro`;
 CREATE TABLE `boleto` (
   `id` int(11) UNSIGNED NOT NULL,
   `dataVcto` date NOT NULL,
-  `valor` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` decimal(7,2) NOT NULL,
   `credor` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `obs` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(1) COLLATE utf8_unicode_ci NOT NULL COMMENT '0=aberto, 1=pago'
@@ -48,7 +48,7 @@ CREATE TABLE `carga` (
   `data` date NOT NULL,
   `peso` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `motorista` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `valorSaca` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `valorSaca` decimal(7,2) NOT NULL,
   `qtdSacas50` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `qtdSacas25` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -60,7 +60,7 @@ CREATE TABLE `carga` (
 CREATE TABLE `despesa` (
   `id` int(11) UNSIGNED NOT NULL,
   `descricao` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `valor` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` decimal(7,2) NOT NULL,
   `requerente` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -132,7 +132,7 @@ INSERT INTO `usuarios` (`id`, `nome`, `usuario`, `senha`, `nivel`) VALUES
 CREATE TABLE `venda` (
   `id` int(11) UNSIGNED NOT NULL,
   `produto` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `valorVenda` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
+  `valorVenda` decimal(7,2) NOT NULL,
   `quantidade` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `data` date NOT NULL,
   `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL

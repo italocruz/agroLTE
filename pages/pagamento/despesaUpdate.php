@@ -16,10 +16,15 @@ if (null == $id) {
 if (!empty($_POST)) {
 
     $descricao = $_POST['descricao'];
-    $valor = $_POST['valor'];
+    
+    if (strlen($_POST['valor']) < 7) {
+        $valor = str_replace(",", ".", $_POST['valor']);
+    } else {
+        $valor = str_replace(",", ".", str_replace(".", "", $_POST['valor']));
+    }
+    
     $requerente = $_POST['requerente'];
     $data = $_POST['data'];
-    //$data = date('Y-m-d', strtotime($_POST["data"]));
 
     //Inserindo no Banco:
     $pdo = Banco::conectar();
@@ -32,7 +37,7 @@ if (!empty($_POST)) {
     header("Location: despesa.php");
 
     Banco::desconectar();
-    //header("Location: venda.php");
+
 } else {
     $pdo = Banco::conectar();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -41,7 +46,7 @@ if (!empty($_POST)) {
     $q->execute(array($id));
     $stmt = $q->fetch(PDO::FETCH_ASSOC);
     $descricao = $stmt['descricao'];
-    $valor = $stmt['valor'];
+    $valor = number_format($stmt['valor'], 2, ',', '.');
     $requerente = $stmt['requerente'];
     $data = $stmt['data'];
 
@@ -111,11 +116,10 @@ if (!empty($_POST)) {
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Valor</label>
-                                            <input type="text" class="form-control" placeholder="Valor" name="valor" required="" onkeypress="return onlynumber();" value="<?php echo!empty($valor) ? $valor : ''; ?>">
+                                            <input type="text" class="form-control" placeholder="Valor" name="valor" required="" onkeyup="moeda(this);" value="<?php echo!empty($valor) ? $valor : ''; ?>">
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="row">
                                     <div class="col-6">
@@ -194,38 +198,7 @@ if (!empty($_POST)) {
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-        </script>
-
-
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>  

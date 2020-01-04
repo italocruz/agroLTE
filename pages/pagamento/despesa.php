@@ -62,7 +62,7 @@ include '../../sessao.php';
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label>Valor</label>
-                                            <input type="text" class="form-control" placeholder="Valor" name="valor" required="" onkeypress="return onlynumber();" value="<?php echo!empty($valor) ? $valor : ''; ?>">
+                                            <input type="text" class="form-control" placeholder="Valor" name="valor" required="" onkeyup="moeda(this);" value="<?php echo!empty($valor) ? $valor : ''; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -93,9 +93,7 @@ include '../../sessao.php';
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- /.card-body -->
-
                                 <div class="modal-footer justify-content-between">
                                     <button type="submit" class="btn btn-success swalDefaultSuccess">Salvar</button>
                                     <a href="../../index.php" class="btn btn-warning" >Cancelar</a>
@@ -112,10 +110,13 @@ include '../../sessao.php';
                 if (!empty($_POST)) {
 
                     $descricao = $_POST['descricao'];
-                    $valor = $_POST['valor'];
+                    if (strlen($_POST['valor']) < 7) {
+                        $valor = str_replace(",", ".", $_POST['valor']);
+                    } else {
+                        $valor = str_replace(",", ".", str_replace(".", "", $_POST['valor']));
+                    }
                     $requerente = $_POST['requerente'];
                     $data = $_POST['data'];
-
 
                     //Inserindo no Banco:
                     $pdo = Banco::conectar();
@@ -152,7 +153,6 @@ include '../../sessao.php';
                         </div><!-- /.container-fluid -->
                     </section>
 
-
                     <section class="content">
                         <div class="card card-primary">
                             <div class="card-header">
@@ -160,7 +160,7 @@ include '../../sessao.php';
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-striped">
+                                <table id="despesa" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th style="display:none">#</th>
@@ -177,7 +177,7 @@ include '../../sessao.php';
                                             echo '<tr>';
                                             echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
                                             echo '<td>' . $row['descricao'] . '</td>';
-                                            echo '<td>' . $row['valor'] . '</td>';
+                                            echo '<td> R$ ' . number_format($row['valor'], 2, ',', '.') . '</td>';
                                             echo '<td>' . $row['nome'] . '</td>';
                                             echo '<td width=110>';
 
@@ -244,50 +244,7 @@ include '../../sessao.php';
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-             
-             $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-delete').modal({show: true});
-                    return false;
-                });
-            });
-        </script>
-
-
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>  

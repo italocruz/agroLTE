@@ -50,7 +50,7 @@ include '../../sessao.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example2" class="table table-bordered table-striped">
+                            <table id="boleto" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th style="display:none">#</th>
@@ -83,7 +83,7 @@ include '../../sessao.php';
                                         echo '<td>' . date("d/m/Y", strtotime($row['data'])) . '</td>';
                                         echo '<td>' . $row['peso'] . '</td>';
                                         echo '<td>' . $row['motorista'] . '</td>';
-                                        echo '<td>R$ ' . $row['valorSaca'] . '</td>';
+                                        echo '<td>R$ ' . number_format($row['valorSaca'], 2, ',', '.') . '</td>';
                                         echo '<td>' . $row['qtdSacas50'] . '</td>';
                                         echo '<td>' . $row['qtdSacas25'] . '</td>';
                                         echo '<td> R$ ' . number_format($preco, 2, ',', '.') . ' </td>';
@@ -143,33 +143,9 @@ include '../../sessao.php';
         <!-- DataTables -->
         <script src="../../plugins/datatables/jquery.dataTables.js"></script>
         <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+        
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-
-            $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-delete').modal({show: true});
-                    return false;
-                });
-            });
-
-        </script>
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>

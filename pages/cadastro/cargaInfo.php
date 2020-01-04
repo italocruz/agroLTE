@@ -21,7 +21,7 @@ $stmt = $q->fetch(PDO::FETCH_ASSOC);
 $data = $stmt['data'];
 $peso = $stmt['peso'];
 $motorista = $stmt['motorista'];
-$valorSaca = $stmt['valorSaca'];
+$valorSaca = number_format($stmt['valorSaca'], 2, ',', '.');
 $qtdSacas50 = $stmt['qtdSacas50'];
 $qtdSacas25 = $stmt['qtdSacas25'];
 

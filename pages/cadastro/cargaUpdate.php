@@ -17,7 +17,13 @@ if (!empty($_POST)) {
     $data = $_POST['data'];
     $peso = $_POST['peso'];
     $motorista = $_POST['motorista'];
-    $valorSaca = $_POST['valorSaca'];
+    
+    if (strlen($_POST['valorSaca']) < 7) {
+        $valorSaca = str_replace(",", ".", $_POST['valorSaca']);
+    } else {
+        $valorSaca = str_replace(",", ".", str_replace(".", "", $_POST['valorSaca']));
+    }
+    
     $qtdSacas50 = $_POST['qtdSacas50'];
     $qtdSacas25 = $_POST['qtdSacas25'];
 
@@ -40,7 +46,7 @@ if (!empty($_POST)) {
     $data = $stmt['data'];
     $peso = $stmt['peso'];
     $motorista = $stmt['motorista'];
-    $valorSaca = $stmt['valorSaca'];
+    $valorSaca = number_format($stmt['valorSaca'], 2, ',', '.');
     $qtdSacas50 = $stmt['qtdSacas50'];
     $qtdSacas25 = $stmt['qtdSacas25'];
 
@@ -118,7 +124,7 @@ if (!empty($_POST)) {
                                 <div class="row"> 
                                     <div class="col-4">
                                         <label>Valor da Saca</label>
-                                        <input type="text" class="form-control" placeholder="Valor da Saca" name="valorSaca" onkeypress="return onlynumber();" required="" value="<?php echo!empty($valorSaca) ? $valorSaca : ''; ?>">
+                                        <input type="text" class="form-control" placeholder="Valor da Saca" name="valorSaca" onkeyup="moeda(this);" required="" value="<?php echo!empty($valorSaca) ? $valorSaca : ''; ?>">
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
@@ -146,7 +152,6 @@ if (!empty($_POST)) {
                     </div>
                     <!-- /.card -->
                 </section>
-
 
             </div>
             <!-- /.content-wrapper -->
@@ -182,49 +187,7 @@ if (!empty($_POST)) {
         <script src="../../plugins/toastr/toastr.min.js"></script>
 
         <!-- page script -->
-        <script>
-            $(function () {
-                $("#example1").DataTable();
-                $('#example2').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "searching": false,
-                    "ordering": false,
-                    "info": true,
-                    "autoWidth": false,
-                });
-            });
-            $('.swalDefaultSuccess').click(function () {
-                Toast.fire({
-                    type: 'success',
-                    title: 'Venda realizada com sucesso!'
-                })
-            });
-            
-            function onlynumber(evt) {
-                var theEvent = evt || window.event;
-                var key = theEvent.keyCode || theEvent.which;
-                key = String.fromCharCode( key );
-                var regex = /^[0-9.,]+$/;
-                if( !regex.test(key) ) {
-                   theEvent.returnValue = false;
-                   if(theEvent.preventDefault) theEvent.preventDefault();
-                }
-             }
-             
-             $(document).ready(function () {
-                $('a[data-confirm]').click(function (ev) {
-                    var href = $(this).attr('href');
-                    if (!$('#confirm-delete').length) {
-                        $('body').append('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content bg-danger"><div class="modal-header bg-danger text-white"><h4 class="modal-title">Deseja excluir?</h4></div><div class="modal-footer justify-content-between"><button type="button" class="btn btn-outline-light" data-dismiss="modal">Não</button><a class="btn btn-outline-light" id="dataComfirmOK">Sim</a></div></div></div></div>');
-                    }
-                    $('#dataComfirmOK').attr('href', href);
-                    $('#confirm-delete').modal({show: true});
-                    return false;
-                });
-            });
-        </script>
-
+        <?php include '../util/js.html'; ?>
 
     </body>
 </html>  

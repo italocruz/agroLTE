@@ -220,6 +220,17 @@ error_reporting(E_WARNING);
                         -->
                     </li>
                 <?php } ?>
+                    
+                <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
+                    <li class="nav-item">
+                        <a href="../relatorio/faturamento.php" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Relatório
+                            </p>
+                        </a>
+                    </li>
+                <?php } ?>
 
                 <!-- icon para relatório -->
                 <!-- <i class="nav-icon fas fa-copy"></i> -->

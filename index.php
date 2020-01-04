@@ -267,8 +267,16 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             </li>
                             <?php } ?>
                             
-                            <!-- icon para relatório -->
-                            <!-- <i class="nav-icon fas fa-copy"></i> -->
+                            <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
+                            <li class="nav-item">
+                                <a href="pages/relatorio/faturamento.php" class="nav-link">
+                                    <i class="nav-icon fas fa-copy"></i>
+                                    <p>
+                                        Relatório
+                                    </p>
+                                </a>
+                            </li>
+                            <?php } ?>
                                 
                             <!-- Fim Menu Central -->
                         </ul>
@@ -330,24 +338,44 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             </div>
                             -->
                             <!-- ./col -->
-                            <!--
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box bg-warning">
-                                    <div class="inner">
-                                        <h3>44</h3>
-
-                                        <p>User Registrations</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-person-add"></i>
-                                    </div>
-                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                            -->
-                            <!-- ./col -->
                             <?php
                             include 'banco.php';
+                            $pdo = Banco::conectar();
+
+                            $status = "0"; //Boletos em aberto
+                            $hoje = date("Y-m-d");
+                            $sql = 'SELECT * FROM boleto WHERE status = ? AND dataVcto < ? ORDER BY dataVcto';
+                            $q = $pdo->prepare($sql);
+                            $q->execute(array($status, $hoje));
+                            $result = $q->fetchAll();
+                            if (count($result)) {
+                                foreach ($result as $row) {
+                                    $totalAtrasado = $totalAtrasado + 1;
+                                }
+                            ?>
+                            <div class="col-lg-3 col-6">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3><?php echo $totalAtrasado; ?></h3>
+                                        <?php 
+                                            if ($totalAtrasado > 1) {
+                                                echo '<p><b>Boletos vencidos!</b></p>';
+                                            } else {
+                                                echo '<p><b>Boleto vencido!</b></p>';
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-clipboard"></i>
+                                    </div>
+                                    <a href="pages/boletos/boletosAbertos.php" class="small-box-footer">Verificar <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <?php } ?>
+                            
+                            <!-- ./col -->
+                            <?php
                             $pdo = Banco::conectar();
 
                             $status = "0"; //Boletos em aberto
@@ -363,14 +391,14 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             ?>
                             <div class="col-lg-3 col-6">
                                 <!-- small box -->
-                                <div class="small-box bg-danger">
+                                <div class="small-box bg-warning">
                                     <div class="inner">
                                         <h3><?php echo $total; ?></h3>
                                         <?php 
                                             if ($total > 1) {
-                                                echo '<p>Boletos vencendo hoje!</p>';
+                                                echo '<p><b>Boletos vencendo hoje!</b></p>';
                                             } else {
-                                                echo '<p>Boleto vencendo hoje!</p>';
+                                                echo '<p><b>Boleto vencendo hoje!</b></p>';
                                             }
                                         ?>
                                     </div>

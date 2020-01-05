@@ -99,7 +99,7 @@ include '../../sessao.php';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="relatorio" class="table table-bordered table-striped">
+                                    <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="display:none">#</th>
@@ -127,22 +127,22 @@ include '../../sessao.php';
                                                 echo '<td>' . $row['quantidade'] . '</td>';
                                                 echo '<td>' . $row['tipo'] . '</td>';
                                             }
-
+                                            ?>
+                                        </tbody>
+                                        <?php
+                                            echo '<th colspan="4" class="bg-light" style="text-align: center">Vendas do Dia</th>';
                                             echo '</tr>';
                                             echo '<th colspan="1">Total Milho:</th>';
                                             echo '<td colspan="1" > <b>R$ ' . number_format($totalMilho, 2, ',', '.') . '</b> </td>';
                                             echo '<th colspan="1">Total Ração:</th>';
                                             echo '<td colspan="1"> <b>R$ ' . number_format($totalRacao, 2, ',', '.') . '</b> </td>';
                                             echo '<tr>';
-                                            echo '<th colspan="2">Total do Dia:</th>';
+                                            echo '<th colspan="2">Total:</th>';
                                             echo '<td colspan="2" > <b>R$ ' . number_format(($totalMilho + $totalRacao), 2, ',', '.') . '</b> </td>';
                                             echo '</tr>';
-                                            ?>
-                                        </tbody>
-
+                                        ?>
                                     </table>
                                 </div>
-
                                 <!-- /.card-body -->
                                 <!--
                                 <div class="modal-footer justify-content-md-center">

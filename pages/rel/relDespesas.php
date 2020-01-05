@@ -99,7 +99,7 @@ include '../../sessao.php';
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="relatorio" class="table table-bordered table-striped">
+                                    <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th style="display:none">#</th>
@@ -122,13 +122,16 @@ include '../../sessao.php';
                                             }
 
                                             echo '</tr>';
-                                            
+                                            ?>
+                                        </tbody>
+                                        <?php
+                                            echo '<th colspan="4" class="bg-light" style="text-align: center">Despesas do Dia</th>';
                                             echo '<tr>';
                                             echo '<th colspan="2">Total do Dia:</th>';
                                             echo '<td colspan="1" > <b>R$ ' . $total . ',00</b> </td>';
                                             echo '</tr>';
-                                            ?>
-                                        </tbody>
+                                            echo '</tr>';
+                                        ?>
 
                                     </table>
                                 </div>

@@ -86,7 +86,7 @@ include '../../sessao.php';
                                         <!-- checkbox -->
                                         <div class="form-group clearfix">
                                             <div class="form-check d-inline">
-                                                <input type="radio" name="tipo" value="Ração">
+                                                <input type="radio" name="tipo" value="Ração" required>
                                                 <label class="form-check-label">Ração</label>
                                             </div>
                                             <div class="form-check d-inline">

@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `agro`
 --
-CREATE DATABASE IF NOT EXISTS `agro` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `agro` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 USE `agro`;
 
 -- --------------------------------------------------------
@@ -121,7 +121,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nome`, `usuario`, `senha`, `nivel`) VALUES
 (1, 'Usuário Teste', 'teste', SHA1('teste'), 1),
-(2, 'Administrador Teste', 'admin', SHA1('admin'), 2);
+(2, 'Administrador Teste', 'admin', SHA1('admin'), 2),
+(3, 'Central Rações', 'centra', SHA1('centralracoes'), 2);
 
 -- --------------------------------------------------------
 

@@ -220,3 +220,29 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `venda`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
+--
+-- Estrutura da tabela `venda`
+--
+
+CREATE TABLE `funcionario` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `nome` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `dataAdmissao` date NOT NULL,
+  `salario` decimal(7,2) NOT NULL,
+  `funcao` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `obs` varchar(40) COLLATE utf8_unicode_ci NULL,
+  `dataDemissao` date NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Índices para tabela `venda`
+--
+ALTER TABLE `funcionario`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de tabela `venda`
+--
+ALTER TABLE `funcionario`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;

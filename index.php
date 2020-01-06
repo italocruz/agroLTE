@@ -280,7 +280,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                     <li class="nav-item">
                                         <a href="pages/rel/relDespesas.php" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Despesas Variáveis</p>
+                                            <p>Despesas</p>
                                         </a>
                                     </li>
                                     <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>

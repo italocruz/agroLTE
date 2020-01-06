@@ -37,7 +37,7 @@ if ($count > 0) {
     header("Location: index.php");
     exit;
 } else {
-    echo "Login inválido!";
+    header("Location: loginErro.php");
     exit;
 }
 

@@ -25,23 +25,14 @@ if (!empty($_POST)) {
 
     $funcao = $_POST['funcao'];
     $obs = $_POST['obs'];
-    
     $dataDemissao = $_POST['dataDemissao'];
-    if ($dataDemissao == '0000-00-00') {
-        echo 'true';
-        $dataDemissao = NULL;
-    } else {
-        $dataDemissao = $_POST['dataDemissao'];    
-    }
-    
-    exit();
 
     //Inserindo no Banco:
     $pdo = Banco::conectar();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE funcioario set nome = ?, dataAdmissao = ?, salario = ?, funcao = ?, obs = ?, dataDemissao = ? WHERE id = ?";
+    $sql = "UPDATE funcionario set nome = ?, dataAdmissao = ?, salario = ?, funcao = ?, obs = ?, dataDemissao = ? WHERE id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($nome, $dataAdmissao, $salario, $funcao, $obs, $dataDemissao, $id));
+    $q->execute(array($nome, $dataAdmissao, $salario, $funcao, $obs,$dataDemissao, $id));
     Banco::desconectar();
     header("Location: funcionario.php");
 
@@ -62,6 +53,7 @@ if (!empty($_POST)) {
     Banco::desconectar();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -88,6 +80,7 @@ if (!empty($_POST)) {
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
 
+
             <!-- MENU -->
             <?php include '../../menu.php'; ?>
             <!-- MENU -->
@@ -112,9 +105,10 @@ if (!empty($_POST)) {
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="funcionario.php" method="post">
+
+                        <form action="funcionarioUpdate.php?id=<?php echo $id ?>" method="post">
                             <div class="card-body">
-                                
+
                                 <div class="row">
                                     <div class="col-sm-9">
                                         <!-- text input -->
@@ -124,7 +118,6 @@ if (!empty($_POST)) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-3">
                                         <div class="form-group">
@@ -161,7 +154,7 @@ if (!empty($_POST)) {
                                 <!-- /.card-body -->
 
                                 <div class="modal-footer justify-content-between">
-                                    <button type="submit" class="btn btn-success swalDefaultSuccess">Salvar</button>
+                                    <button type="submit" class="btn btn-success swalDefaultSuccess">Atualizar</button>
                                     <a href="funcionario.php" class="btn btn-warning" >Cancelar</a>
                                 </div>
                             </div>
@@ -171,7 +164,9 @@ if (!empty($_POST)) {
                     </div>
                     <!-- /.card -->
                 </section>
-                <!-- Main content -->
+
+                <!-- LISTA DE VENDAS -->
+
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
@@ -200,9 +195,19 @@ if (!empty($_POST)) {
         <!-- DataTables -->
         <script src="../../plugins/datatables/jquery.dataTables.js"></script>
         <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-        
+        <!-- SweetAlert2 -->
+        <script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
+        <!-- Toastr -->
+        <script src="../../plugins/toastr/toastr.min.js"></script>
+
         <!-- page script -->
         <?php include '../util/js.html'; ?>
 
+
+
     </body>
-</html>
+</html>  
+
+<?php
+ob_end_flush();
+?>

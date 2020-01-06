@@ -71,7 +71,7 @@ include '../../sessao.php';
                                                 <?php
                                                 include '../../banco.php';
                                                 $pdo = Banco::conectar();
-                                                $sql = 'SELECT * FROM funcionario WHERE dataDemissao IS NULL ORDER BY dataAdmissao';
+                                                $sql = 'SELECT * FROM funcionario WHERE dataDemissao ="0000-00-00" ORDER BY dataAdmissao';
                                                 foreach ($pdo->query($sql)as $row) {
                                                     echo '<option value="' . $row["id"] . '">' . $row["nome"] . '</option>';
                                                 }

@@ -137,7 +137,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                 -->
                             </li>
                             
-                            <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
+                            <!-- MENU CAIXA
+                            < ?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
                                     <i class="fas fa-calculator nav-icon"></i>
@@ -146,22 +147,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/rel/relVendas.php" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Vendas</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/rel/relDespesas.php" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Despesas Variáveis</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
-                            <?php } ?>
+                            < ?php } ?>
+                            -->
 
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
@@ -175,7 +163,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                     <li class="nav-item">
                                         <a href="pages/pagamento/despesa.php" class="nav-link">
                                             <i class="fas fa-barcode nav-icon"></i>
-                                            <p>Despesas Variáveis</p>
+                                            <p>Despesas</p>
                                         </a>
                                     </li>
                                     <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
@@ -183,6 +171,12 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                             <a href="pages/boletos/boletosAbertos.php" class="nav-link">
                                                 <i class="fas fa-barcode nav-icon"></i>
                                                 <p>Boletos</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="pages/funcionario/funcionarioPgto.php" class="nav-link">
+                                                <i class="fas fa-barcode nav-icon"></i>
+                                                <p>Funcionário</p>
                                             </a>
                                         </li>
                                     <?php } ?>
@@ -194,18 +188,10 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-edit"></i>
                                     <p>
-                                        Organização
+                                        Gestão
                                         <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                  <li class="nav-item">
-                                      <a href="pages/boletos/boleto.php" class="nav-link">
-                                      <i class="fas fa-clipboard nav-icon"></i>
-                                      <p>Boletos</p>
-                                    </a>
-                                  </li>  
-                                </ul>
                                 <ul class="nav nav-treeview">
                                   <li class="nav-item">
                                       <a href="pages/cadastro/carga.php" class="nav-link">
@@ -215,8 +201,16 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                   </li>  
                                 </ul>
                                 <ul class="nav nav-treeview">
+                                  <li class="nav-item">
+                                      <a href="pages/boletos/boleto.php" class="nav-link">
+                                      <i class="fas fa-clipboard nav-icon"></i>
+                                      <p>Boletos</p>
+                                    </a>
+                                  </li>  
+                                </ul>
+                                <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="pages/funcionarios/funcionario.php" class="nav-link">
+                                        <a href="pages/funcionario/funcionario.php" class="nav-link">
                                             <i class="fas fa-clipboard nav-icon"></i>
                                             <p>Funcionários</p>
                                         </a>
@@ -267,16 +261,39 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             </li>
                             <?php } ?>
                             
-                            <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
-                            <li class="nav-item">
-                                <a href="pages/relatorio/faturamento.php" class="nav-link">
+                            
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-copy"></i>
                                     <p>
-                                        Relatório
+                                        Relatórios
+                                        <i class="fas fa-angle-left right"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="pages/rel/relVendas.php" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Vendas</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pages/rel/relDespesas.php" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Despesas Variáveis</p>
+                                        </a>
+                                    </li>
+                                    <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
+                                    <li class="nav-item">
+                                        <a href="pages/relatorio/faturamento.php" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Faturamento</p>
+                                        </a>
+                                    </li>
+                                    <?php } ?>
+                                </ul>
                             </li>
-                            <?php } ?>
+                            
                                 
                             <!-- Fim Menu Central -->
                         </ul>

@@ -228,13 +228,13 @@ error_reporting(E_WARNING);
                             <li class="nav-item">
                                 <a href="../rel/relVendas.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Vendas</p>
+                                    <p>Vendas do Dia</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="../rel/relDespesas.php" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Despesas</p>
+                                    <p>Despesas do Dia</p>
                                 </a>
                             </li>
                             <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>

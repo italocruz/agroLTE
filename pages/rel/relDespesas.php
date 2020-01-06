@@ -38,7 +38,7 @@ include '../../sessao.php';
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Relatório de Despesas Variáveis</h1>
+                                <h1>Despesas do Dia</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -86,23 +86,33 @@ include '../../sessao.php';
                     $sql = 'SELECT d.id, d.descricao, d.valor, d.data, r.nome FROM despesa d, requerente r WHERE r.id = d.requerente AND d.data = :data ORDER BY d.id DESC';
                     $q = $pdo->prepare($sql);
                     $q->execute(array('data' => $data));
-
                     $result = $q->fetchAll();
+                    
+                    $sqlP = 'SELECT valor, tipoPagamento, descricao, '
+                            . 'CASE tipoPagamento '
+                            . 'when 1 then "Carga" '
+                            . 'when 2 then "Boleto" '
+                            . 'when 3 then "Funcionário" '
+                            . 'when 4 then "Estiva" '
+                            . 'END AS tp '
+                            . 'FROM pagamento WHERE data = :data ORDER BY tipoPagamento';
+                    $qP = $pdo->prepare($sqlP);
+                    $qP->execute(array('data' => $data));
+                    $resultP = $qP->fetchAll(); 
 
-                    if (count($result)) {
+                    if (count($result) || count($resultP)) {
                         ?>
 
                         <section class="content">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Relatório de Despesas Variáveis do dia: <b><?php echo date("d/m/Y", strtotime($data)); ?></b></h3>
+                                    <h3 class="card-title">Relatório de Despesas do dia: <b><?php echo date("d/m/Y", strtotime($data)); ?></b></h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="display:none">#</th>
                                                 <th>Descrição</th>
                                                 <th>Valor</th>
                                                 <th>Requerente</th>
@@ -111,14 +121,27 @@ include '../../sessao.php';
 
                                         <tbody>
                                             <?php
-                                            foreach ($result as $row) {
-                                                $total = $total + $row['valor'];
+                                            
+                                            if (count($result)) {
+                                                foreach ($result as $row) {
+                                                    $total = $total + $row['valor'];
 
-                                                echo '<tr>';
-                                                echo '<th scope="row" style="display:none">' . $row['id'] . '</th>';
-                                                echo '<td>' . $row['descricao'] . '</td>';
-                                                echo '<td>' . $row['valor'] . '</td>';
-                                                echo '<td>' . $row['nome'] . '</td>';   
+                                                    echo '<tr>';
+                                                    echo '<td>' . $row['descricao'] . '</td>';
+                                                    echo '<td> R$ ' . number_format($row['valor'], 2, ',', '.') . '</td>';
+                                                    echo '<td>' . $row['nome'] . '</td>';   
+                                                }
+                                            }
+                                            
+                                            if (count($resultP)) {
+                                                foreach ($resultP as $rowP) {
+                                                   $totalP = $totalP + $row['valor'];
+
+                                                   echo '<tr>';
+                                                   echo '<td>' . $rowP['descricao'] . '</td>';
+                                                   echo '<td> R$ ' . number_format($rowP['valor'], 2, ',', '.') . '</td>';
+                                                   echo '<td>' . $rowP['tp'] . '</td>';   
+                                               }   
                                             }
 
                                             echo '</tr>';
@@ -127,8 +150,8 @@ include '../../sessao.php';
                                         <?php
                                             echo '<th colspan="4" class="bg-light" style="text-align: center">Despesas do Dia</th>';
                                             echo '<tr>';
-                                            echo '<th colspan="2">Total do Dia:</th>';
-                                            echo '<td colspan="1" > <b>R$ ' . $total . ',00</b> </td>';
+                                            echo '<th colspan="1">Total:</th>';
+                                            echo '<td colspan="2" > <b>R$ ' . number_format(($total + $totalP), 2, ',', '.') . '</b> </td>';
                                             echo '</tr>';
                                             echo '</tr>';
                                         ?>

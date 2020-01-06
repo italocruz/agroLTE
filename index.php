@@ -8,10 +8,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   error_reporting(E_WARNING);
 }
 
-//session_start();
-//$_SESSION['versao'] = "1.0.0";
-//Definindo o prazo para a cache expirar em 60 minutos.
-  //session_cache_expire(1);
+include 'banco.php';
 ?>
 
 
@@ -274,13 +271,13 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                                     <li class="nav-item">
                                         <a href="pages/rel/relVendas.php" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Vendas</p>
+                                            <p>Vendas do Dia</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="pages/rel/relDespesas.php" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Despesas</p>
+                                            <p>Despesas do Dia</p>
                                         </a>
                                     </li>
                                     <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
@@ -339,24 +336,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             </div>
                             -->
                             <!-- ./col -->
-                            <!--
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box bg-success">
-                                    <div class="inner">
-                                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                                        <p>Bounce Rate</p>
-                                    </div>
-                                    <div class="icon">
-                                        <i class="ion ion-stats-bars"></i>
-                                    </div>
-                                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                            -->
+                            
                             <!-- ./col -->
                             <?php
-                            include 'banco.php';
                             $pdo = Banco::conectar();
 
                             $status = "0"; //Boletos em aberto
@@ -427,6 +409,42 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
                             </div>
                             <?php } ?>
                             <!-- ./col -->
+                            <?php
+                            $pdo = Banco::conectar();
+
+                            $status = "0"; //Boletos em aberto
+                            $dI = date("Y-m-d", time()+86400); 
+                            $dF = date("Y-m-d");
+                            $sql = 'SELECT * FROM boleto WHERE status = ? AND dataVcto between ? and DATE_ADD(?, INTERVAL 7 DAY) ORDER BY dataVcto';
+                            $q = $pdo->prepare($sql);
+                            
+                            $q->execute(array($status, $dI, $dF));
+                            $result = $q->fetchAll();
+                            if (count($result)) {
+                                foreach ($result as $row) {
+                                    $totalFuturo = $totalFuturo + 1;
+                                }
+                            ?>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3><?php echo $totalFuturo; ?></h3>
+
+                                        <?php 
+                                            if ($totalFuturo > 1) {
+                                                echo '<p><b>Boletos a vencer nos próximos 7 dias!</b></p>';
+                                            } else {
+                                                echo '<p><b>Boleto a vencer nos próximos 7 dias!</b></p>';
+                                            }
+                                        ?>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-clipboard"></i>
+                                    </div>
+                                    <a href="pages/boletos/boletosAbertos.php" class="small-box-footer">Verificar <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <?php } ?>
                         </div>
                         <!-- /.row -->
                         <!-- Main row -->

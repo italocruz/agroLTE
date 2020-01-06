@@ -38,7 +38,7 @@ include '../../sessao.php';
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>Relatório de Vendas</h1>
+                                <h1>Vendas do Dia</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->

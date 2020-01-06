@@ -136,6 +136,7 @@ CREATE TABLE `venda` (
   `valorVenda` decimal(7,2) NOT NULL,
   `quantidade` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `data` date NOT NULL,
+  `hora` datetime DEFAULT NULL,
   `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

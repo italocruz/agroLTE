@@ -126,14 +126,18 @@ include '../../sessao.php';
                     
                     $quantidade = $_POST['quantidade'];
                     $data = $_POST['data'];
+                    $hora = date('Y-m-d H:i:s');
                     $tipo = $_POST['tipo'];
 
                     //Inserindo no Banco:
                     $pdo = Banco::conectar();
                     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $sql = "INSERT INTO venda (produto, valorVenda, quantidade, data, tipo) VALUES(?,?,?,?,?)";
+                    $sql = "INSERT INTO venda (produto, valorVenda, quantidade, data, hora, tipo) VALUES(?,?,?,?,?,?)";
                     $q = $pdo->prepare($sql);
-                    $q->execute(array($produto, $valorVenda, $quantidade, $data, $tipo));
+                    $q->execute(array($produto, $valorVenda, $quantidade, $data, $hora, $tipo));
+                    
+                    print_r($q);
+                    
                     Banco::desconectar();
                     header("Location: venda.php");
                 }
@@ -146,6 +150,9 @@ include '../../sessao.php';
                 $hoje = date("Y-m-d");
                 $sql = 'SELECT * FROM venda WHERE data = :hoje ORDER BY id DESC';
                 $q = $pdo->prepare($sql);
+                //echo $hoje .date(' H:i');
+                //$teste = strval($hoje). strval(date(' H:i'));
+                //echo ' teste: '.$teste;
                 $q->execute(array('hoje' => $hoje));
 
                 $result = $q->fetchAll();
@@ -192,7 +199,7 @@ include '../../sessao.php';
                                         echo '<td>' . $row['produto'] . '</td>';
                                         echo '<td> R$ ' . number_format($row['valorVenda'], 2, ',', '.') . '</td>';
                                         echo '<td>' . $row['quantidade'] . '</td>';
-                                        echo '<td>' . date("d/m/Y", strtotime($row['data'])) . '</td>';
+                                        echo '<td>' . date("d/m/Y", strtotime($row['data'])) . date(" H:i", strtotime($row['hora'])) . '</td>';
                                         echo '<td>' . $row['tipo'] . '</td>';
                                         
                                         echo '<td width=110>';

@@ -24,14 +24,15 @@ if (!empty($_POST)) {
     
     $quantidade = $_POST['quantidade'];
     $data = $_POST['data'];
+    $hora = date('Y-m-d H:i:s');
     $tipo = $_POST['tipo'];
 
     //Inserindo no Banco:
     $pdo = Banco::conectar();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "UPDATE venda  set produto = ?, valorVenda = ?, quantidade = ?, data = ?, tipo = ? WHERE id = ?";
+    $sql = "UPDATE venda  set produto = ?, valorVenda = ?, quantidade = ?, data = ?, hora = ?, tipo = ? WHERE id = ?";
     $q = $pdo->prepare($sql);
-    $q->execute(array($produto, $valorVenda, $quantidade, $data, $tipo, $id));
+    $q->execute(array($produto, $valorVenda, $quantidade, $data, $hora, $tipo, $id));
     Banco::desconectar();
     header("Location: venda.php");
 

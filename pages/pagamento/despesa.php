@@ -40,6 +40,13 @@ include '../../sessao.php';
                             <div class="col-sm-6">
                                 <h1>Despesa</h1>
                             </div>
+                            <?php if ($_SESSION['UsuarioNivel'] == "2") { ?>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <a href="despesas.php" class="btn btn-primary swalDefaultSuccess">Despesas Passadas</a>
+                                </ol>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div><!-- /.container-fluid -->
                 </section>

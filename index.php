@@ -287,6 +287,12 @@ include 'banco.php';
                                             <p>Faturamento</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="pages/relatorio/despesas.php" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Detalhe Despesas</p>
+                                        </a>
+                                    </li>
                                     <?php } ?>
                                 </ul>
                             </li>

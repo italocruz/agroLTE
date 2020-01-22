@@ -142,7 +142,10 @@ include '../../sessao.php';
                                         $resultDD = $qDD->fetchAll();
                                         
                                         if (!empty($resultDD)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Depósito</th> </tr>';
+                                            foreach ($resultDD as $rowA) {
+                                                 $totalD = $totalD + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Depósito - R$ '. number_format($totalD, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -157,7 +160,10 @@ include '../../sessao.php';
                                         $resultDA = $qDA->fetchAll();
                                         
                                         if (!empty($resultDA)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Aparecida</th> </tr>';
+                                            foreach ($resultDA as $rowA) {
+                                                 $totalA = $totalA + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Aparecida - R$ '. number_format($totalA, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -172,7 +178,10 @@ include '../../sessao.php';
                                         $resultDJ = $qDJ->fetchAll();
                                         
                                         if (!empty($resultDJ)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">José</th> </tr>';
+                                            foreach ($resultDJ as $rowA) {
+                                                 $totalJ = $totalJ + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">José - R$ '. number_format($totalJ, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -187,7 +196,10 @@ include '../../sessao.php';
                                         $resultDP = $qDP->fetchAll();
                                         
                                         if (!empty($resultDP)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Priscila</th> </tr>';
+                                            foreach ($resultDP as $rowA) {
+                                                 $totalP = $totalP + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Priscila - R$ '. number_format($totalP, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -202,7 +214,10 @@ include '../../sessao.php';
                                         $resultDI = $qDI->fetchAll();
                                         
                                         if (!empty($resultDI)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Ítalo</th> </tr>';
+                                            foreach ($resultDI as $rowA) {
+                                                 $totalI = $totalI + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Ítalo - R$ '. number_format($totalI, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -217,7 +232,10 @@ include '../../sessao.php';
                                         $resultDO = $qDO->fetchAll();
                                         
                                         if (!empty($resultDO)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Outro</th> </tr>';
+                                            foreach ($resultDO as $rowA) {
+                                                 $totalO = $totalO + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Outro - R$ '. number_format($totalO, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -241,7 +259,10 @@ include '../../sessao.php';
                                         $resultDC = $qDC->fetchAll();
                                         
                                         if (!empty($resultDC)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Carga</th> </tr>';
+                                            foreach ($resultDC as $rowA) {
+                                                 $totalC = $totalC + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Carga - R$ '. number_format($totalC, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -265,7 +286,10 @@ include '../../sessao.php';
                                         $resultDB = $qDB->fetchAll();
                                         
                                         if (!empty($resultDB)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Boleto</th> </tr>';
+                                            foreach ($resultDB as $rowA) {
+                                                 $totalB = $totalB + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Boleto - R$ '. number_format($totalB, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -291,7 +315,10 @@ include '../../sessao.php';
                                         $resultDF = $qDF->fetchAll();
                                         
                                         if (!empty($resultDF)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Funcionário</th> </tr>';
+                                            foreach ($resultDF as $rowA) {
+                                                 $totalF = $totalF + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Funcionário - R$ '. number_format($totalF, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
@@ -315,7 +342,10 @@ include '../../sessao.php';
                                         $resultDE = $qDE->fetchAll();
                                         
                                         if (!empty($resultDE)) {
-                                            echo '<tr> <th colspan="4" style="text-align: center">Estiva</th> </tr>';
+                                            foreach ($resultDE as $rowA) {
+                                                 $totalE = $totalE + $rowA['valor'];
+                                            }
+                                            echo '<tr> <th colspan="4" style="text-align: center">Estiva - R$ '. number_format($totalE, 2, ',', '.') .'</th> </tr>';
                                             echo '<tr> <th colspan="2" style="text-align: center">Descrição</th> ';
                                             echo '<th colspan="1" style="text-align: center">Valor</th> ';
                                             echo '<th colspan="1" style="text-align: center">Data</th> </tr>';
